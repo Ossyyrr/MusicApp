@@ -1,4 +1,4 @@
-name: musicapp
+name: base
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http: ^0.13.3
+  rxdart: ^0.27.0
 
 
   # The following adds the Cupertino Icons font to your application.
