@@ -1,6 +1,8 @@
 import 'package:base/src/blocs/search_bloc.dart';
 import 'package:base/src/models/search_model.dart';
+import 'package:base/src/widgets/circular_loader.dart';
 import 'package:base/src/widgets/search.dart';
+import 'package:base/src/widgets/song_card.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -12,8 +14,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late SearchModel listSong;
-  bool isInitialized = false;
   SearchBloc searchBloc = SearchBloc();
+
+  @override
+  void dispose() {
+    searchBloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +30,8 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             Search(
-              updateListSong: updateListSong,
               searchBloc: searchBloc,
             ),
-            // if (isInitialized) Text(listSong.tracks!.hits[0].track.artist)
             Container(
               width: 300,
               height: 300,
@@ -39,13 +44,17 @@ class _HomeState extends State<Home> {
                     if (searchData != null && !loading) {
                       return ListView(
                         clipBehavior: Clip.none,
-                        scrollDirection: Axis.horizontal,
+                        scrollDirection: Axis.vertical,
                         children: _song(searchData),
                       );
                     } else {
-                      return Container(
-                        color: Colors.red,
-                        child: Text('LOADER'),
+                      return Center(
+                        child: CircularLoader(
+                            size: 30,
+                            primaryColor: Colors.red,
+                            secondaryColor: Colors.red,
+                            backgroundColor: Colors.grey.shade200,
+                            strokeWidth: 8),
                       );
                     }
                   }),
@@ -58,18 +67,19 @@ class _HomeState extends State<Home> {
 
   List<Widget> _song(SearchModel? searchData) {
     return searchData!.tracks!.hits
-        .map((data) => Container(
-              width: 40,
-              height: 40,
-              child: Text(data.track.title),
-            ))
+        .map(
+          (data) => SongCard(
+            title: data.track.title,
+            artist: data.track.artist,
+            image: data.track.images.coverart,
+          ),
+        )
         .toList();
   }
 
   updateListSong(SearchModel data) {
     setState(() {
       listSong = data;
-      isInitialized = true;
     });
   }
 }

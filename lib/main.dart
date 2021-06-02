@@ -1,3 +1,4 @@
+import 'package:base/src/constant/theme_data.dart';
 import 'package:base/src/screens/home.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        theme: themeDataApp(),
         initialRoute: '/',
         onGenerateRoute: (RouteSettings settings) {
           final routes = {
