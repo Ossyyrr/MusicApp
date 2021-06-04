@@ -17,16 +17,7 @@ class SongCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              border:
-                  Border.all(color: Theme.of(context).accentColor, width: 1.2),
-            ),
-            child: Image.network(
-              image,
-              width: 60,
-            ),
-          ),
+          _image(context),
           SizedBox(width: 8),
           Container(
               width: MediaQuery.of(context).size.width / 1.8,
@@ -46,6 +37,19 @@ class SongCard extends StatelessWidget {
                 ],
               ))
         ],
+      ),
+    );
+  }
+
+  Widget _image(BuildContext context) {
+    return Container(
+      width: 80,
+      height: 50,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(190),
+        border: Border.all(color: Theme.of(context).accentColor, width: 6),
+        image: DecorationImage(
+            image: NetworkImage(image), fit: BoxFit.cover, scale: 8),
       ),
     );
   }

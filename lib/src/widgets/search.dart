@@ -14,22 +14,30 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
-        child: TextField(
-            controller: _controller,
-            decoration: InputDecoration(
-              hintText: "Enter a message",
-              suffixIcon: IconButton(
-                onPressed: () => _search(inputSearch),
-                icon: Icon(Icons.search),
+    return Container(
+      width: 400,
+      child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
+          child: TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                hintText: "Finder",
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).accentColor),
+                ),
+                hintStyle: TextStyle(color: Theme.of(context).accentColor),
+                suffixIcon: IconButton(
+                  onPressed: () => _search(inputSearch),
+                  icon: Icon(Icons.search),
+                  color: Theme.of(context).accentColor,
+                ),
               ),
-            ),
-            onChanged: (text) {
-              setState(() {
-                inputSearch = text;
-              });
-            }));
+              onChanged: (text) {
+                setState(() {
+                  inputSearch = text;
+                });
+              })),
+    );
   }
 
   Future<void> _search(String text) async {

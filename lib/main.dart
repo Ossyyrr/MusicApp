@@ -1,4 +1,5 @@
 import 'package:base/src/constant/theme_data.dart';
+import 'package:base/src/screens/detail_song.dart';
 import 'package:base/src/screens/home.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +16,13 @@ class MyApp extends StatelessWidget {
         theme: themeDataApp(),
         initialRoute: '/',
         onGenerateRoute: (RouteSettings settings) {
+          dynamic arguments = settings.arguments;
+
           final routes = {
             '/': (BuildContext context) => Home(),
-            //  '/films': (BuildContext context) => Films(),
+            '/detail': (BuildContext context) => DetailSong(
+                  data: arguments['data'],
+                ),
           };
 
           final route = routes[settings.name];

@@ -26,39 +26,43 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          //  backgroundColor: Theme.of(context).primaryColorDark,
           body: Center(
         child: Column(
           children: [
             Search(
               searchBloc: searchBloc,
             ),
-            Container(
-              width: 300,
-              height: 300,
-              child: StreamBuilder(
-                  stream: searchBloc.search,
-                  builder: (_, snapshot) {
-                    final searchData = snapshot.data as SearchModel?;
-                    final loading = !snapshot.hasError && !snapshot.hasData;
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 38.0),
+              child: Container(
+                width: double.infinity,
+                height: 300,
+                child: StreamBuilder(
+                    stream: searchBloc.search,
+                    builder: (_, snapshot) {
+                      final searchData = snapshot.data as SearchModel?;
+                      final loading = !snapshot.hasError && !snapshot.hasData;
 
-                    if (searchData != null && !loading) {
-                      return ListView(
-                        clipBehavior: Clip.none,
-                        scrollDirection: Axis.vertical,
-                        children: _song(searchData),
-                      );
-                    } else {
-                      return Center(
-                        child: CircularLoader(
-                            size: 30,
-                            primaryColor: Colors.red,
-                            secondaryColor: Colors.red,
-                            backgroundColor: Colors.grey.shade200,
-                            strokeWidth: 8),
-                      );
-                    }
-                  }),
-            )
+                      if (searchData != null && !loading) {
+                        return ListView(
+                          clipBehavior: Clip.none,
+                          scrollDirection: Axis.vertical,
+                          children: _song(searchData),
+                        );
+                      } else {
+                        return Center(
+                          child: CircularLoader(
+                              size: 30,
+                              primaryColor: Theme.of(context).accentColor,
+                              secondaryColor: Theme.of(context).accentColor,
+                              backgroundColor: Colors.grey.shade200,
+                              strokeWidth: 8),
+                        );
+                      }
+                    }),
+              ),
+            ),
           ],
         ),
       )),
@@ -68,10 +72,20 @@ class _HomeState extends State<Home> {
   List<Widget> _song(SearchModel? searchData) {
     return searchData!.tracks!.hits
         .map(
-          (data) => SongCard(
-            title: data.track.title,
-            artist: data.track.artist,
-            image: data.track.images.coverart,
+          (data) => GestureDetector(
+            onTap: () => {
+              Navigator.of(context).pushNamed(
+                '/detail',
+                arguments: <String, dynamic>{
+                  'data': data,
+                },
+              )
+            },
+            child: SongCard(
+              title: data.track.title,
+              artist: data.track.artist,
+              image: data.track.images.coverart,
+            ),
           ),
         )
         .toList();

@@ -4,7 +4,7 @@ ThemeData themeDataApp() {
   return ThemeData(
       fontFamily: 'Montserrat',
       primaryColor: const Color(0xFF22feed),
-      primaryColorDark: const Color(0xFF010b87),
+      primaryColorDark: const Color(0xFF00096e),
       accentColor: const Color(0xFFfe22a1),
       errorColor: const Color(0xFFfe7f22),
       disabledColor: const Color(0xffA0A0A0),
